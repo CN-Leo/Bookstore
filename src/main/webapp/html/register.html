@@ -90,11 +90,10 @@
 						</div>
 						<div class="layui-form-item login-btn">
 							<div class="layui-input-block">
-								<button class="layui-btn" lay-submit="" lay-filter="login"
-									onclick="return false">登录</button><a href="register.html">去注册></a>
+								<button class="layui-btn" lay-submit="" lay-filter="register"
+									onclick="return false">注册</button>
 
 							</div>
-							
 						</div>
 					</form>
 				</div>
@@ -129,7 +128,7 @@ layui.config({
     }).use(['jquery','form','layer'], function(){
   var form = layui.form; 
   //监听提交
-  form.on('submit(login)', function(data){
+  form.on('submit(register)', function(data){
 	  $.post("/login",data.field,function(res){
 			if(res.resultCode==GLOBAL_SUCCESS_CODE)
 			{
@@ -142,10 +141,6 @@ layui.config({
 		},'json');
   });
 });
-var register = function()
-{
-window.location.href = "register.html"   
-}
 </script>
 </body>
 </html>

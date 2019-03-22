@@ -14,14 +14,17 @@ import com.example.dao.UserMapper;
 import com.example.pojo.userInfo.UserInfoBean;
 import com.example.service.iface.IUserService;
 import com.example.util.DESTools;
+import com.example.util.SequenceGenerator;
 @Service("userServiceImpl")
 public class UserServiceImpl implements IUserService {
 @Autowired
 UserMapper userMapper;
-
+@Autowired
+SequenceGenerator logIdSeqGen;
 	@Override
 	public BaseResultInfo login(String fUserCode, String fUserPwd) {
 		BaseResultInfo baseResultInfo = new BaseResultInfo();
+		String fId =logIdSeqGen.next();
 		DESTools desTools = DESTools.getInstace();
 		UserInfoBean user = userMapper.queryUserInfoByfUserCode(fUserCode);
 		if(null==user) 

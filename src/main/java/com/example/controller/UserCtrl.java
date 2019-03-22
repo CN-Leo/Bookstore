@@ -4,6 +4,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.mybatis.spring.annotation.MapperScan;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,11 +23,13 @@ import com.example.service.iface.IUserService;
 @Controller
 @MapperScan("com.example.dao")
 public class UserCtrl {
+	private Logger logger = LoggerFactory.getLogger(UserCtrl.class);
 	@Autowired
 	IUserService iUserService;
 
 	@RequestMapping(method=RequestMethod.POST,value ="/login",produces = "text/plain")
 	public @ResponseBody String getUserInfo(HttpServletRequest request,HttpServletResponse response) {
+		logger.info("######login start######");
 		String fUserCode = (String)request.getParameter("fUserCode");//获取用户名
 		String fUserPwd = (String)request.getParameter("fUserPwd");//获取密码
 		BaseResultInfo baseResultInfo =  iUserService.login(fUserCode,fUserPwd);
