@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.dao.UserMapper">
+<resultMap type="com.example.pojo.userInfo.UserInfoBean" id="BaseResultMap">
+<result column="F_USER_CODE" property="fUserCode"/>
+<result column="F_USER_NAME" property="fUserName"/>
+<result column="F_USER_PWD" property="fUserPwd"/>
+</resultMap>
+<select id="queryUserInfoByfUserCode" resultMap="BaseResultMap">
+select F_USER_CODE,f_user_name,F_USER_PWD from t_user_info where f_user_code =#{fUserCode}
+</select>
+</mapper>
