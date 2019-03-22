@@ -35,7 +35,7 @@
 		<div class="headerLayout w1200">
 			<div class="headerCon">
 				<h1 class="mallLogo">
-					<a href="#" title="母婴商城"> <img src="../res/static/img/logo.png">
+					<a href="#" title="药品管理"> <img src="../res/static/img/logo2.png">
 					</a>
 				</h1>
 				<div class="mallSearch">
@@ -69,7 +69,7 @@
 			<div class="login-cont w1200">
 				<div class="form-box">
 					<form class="layui-form" action="">
-						<legend>手机号登录</legend>
+						<legend>手机号注册</legend>
 						<div class="layui-form-item">
 							<div class="layui-inline iphone">
 								<div class="layui-input-inline">
@@ -129,7 +129,7 @@ layui.config({
   var form = layui.form; 
   //监听提交
   form.on('submit(register)', function(data){
-	  $.post("/login",data.field,function(res){
+	  $.post("/register",data.field,function(res){
 			if(res.resultCode==GLOBAL_SUCCESS_CODE)
 			{
 				var obj = res.retMap;
