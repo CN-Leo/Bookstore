@@ -133,7 +133,7 @@ layui.config({
 	  $.post("/login",data.field,function(res){
 			if(res.resultCode==GLOBAL_SUCCESS_CODE)
 			{
-				var obj = res.retMap;
+				var obj = res.retMap.user;
 				window.location.href="index.html?fUserCode="+obj.fUserCode+"&fUserName="+obj.fUserName
 			}else{
 				delError(res);

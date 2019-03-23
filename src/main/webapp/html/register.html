@@ -69,6 +69,8 @@
 			<div class="login-cont w1200">
 				<div class="form-box">
 					<form class="layui-form" action="">
+					<input type="hidden" name="fUserRole" value="1">
+					<input type="hidden" name="fResource" value="1">
 						<legend>手机号注册</legend>
 						<div class="layui-form-item">
 							<div class="layui-inline iphone">
@@ -77,6 +79,14 @@
 										type="tel" name="fUserCode" id="fUserCode"
 										lay-verify="required|phone" placeholder="请输入手机号"
 										autocomplete="off" class="layui-input">
+								</div>
+							</div>
+							<div class="layui-inline iphone">
+								<div class="layui-input-inline">
+									<i class="layui-icon layui-icon-password iphone-icon"></i> <input
+										id="fUserName" type="text" name="fUserName"
+										lay-verify="required" placeholder="请输入昵称" autocomplete="off"
+										class="layui-input">
 								</div>
 							</div>
 							<div class="layui-inline iphone">
