@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.alibaba.fastjson.JSONObject;
 import com.example.common.BaseResultInfo;
 import com.example.common.SystemConstant;
+import com.example.common.SystemResultCodeConstant;
 import com.example.exception.CRUDException;
 import com.example.pojo.userInfo.UserInfoBean;
 import com.example.service.iface.IUserService;
@@ -67,8 +68,8 @@ public class UserCtrl {
 		try {
 			baseResultInfo = iUserService.register(param);
 		} catch (CRUDException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			baseResultInfo.setResultCode(SystemResultCodeConstant.REGISTER_ERROR);
+			baseResultInfo.setResultMsg(SystemResultCodeConstant.REGISTER_ERROR);
 		}catch(Exception e1) 
 		{
 			logger.error("##注册未知错误##"+e1);
