@@ -31,7 +31,7 @@ public class Webfilter implements Filter {
 		HttpServletRequest httpRequest = (HttpServletRequest) request;
 		HttpServletResponse httpResponse = (HttpServletResponse) response;
 		String requestUrl = httpRequest.getRequestURI();
-		if (requestUrl.indexOf("login") < 0&&requestUrl.indexOf("res") < 0&&requestUrl.indexOf("script") < 0) {
+		if (requestUrl.indexOf("login") < 0&&requestUrl.indexOf("res") < 0&&requestUrl.indexOf("script") < 0&&requestUrl.indexOf("manager") < 0) {
 			//登陆，csss,js等静态资源不需要校验
 			UserInfoBean user = (UserInfoBean) SessionUtil.getObjectAttribute(httpRequest, SystemConstant.USER_INFO);
 			if (user == null) {

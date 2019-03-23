@@ -33,7 +33,7 @@
     <div class="headerLayout w1200">
       <div class="headerCon">
         <h1 class="mallLogo">
-          <a href="#" title="图书管理">
+          <a href="#" title="药品管理">
             <img src="../res/static/img/logo_index.png">
           </a>
         </h1>
@@ -467,20 +467,10 @@
   </div>
   <script type="text/javascript">
 
-	  var test2 ="${sessionScope.user_info}"
   var mainApp = angular.module("mainApp", []);
-
   mainApp.controller("mainController", function($scope,$http,$filter) {
-     $scope.fUserName = "${param.fUserName}";
-     $scope.fUserCode = "${param.fUserCode}";
-     $http({  
-         method: 'post',  
-         url: '/getIndexInfo',  
-         data: {},  // post请求时的参数  (AngularJS优先支持RESTFUL(不是SOAP接口)接口服务的方式(默认传JSON格式的数据));  
-         headers: {'Content-Type': 'text/plain'}  
-     }).success(function(data,status,headers,config) {  
-     }).error(function(data,status,headers,config) {  
-     });  
+     $scope.fUserName = "${sessionScope.user_info.fUserName}";
+     $scope.fUserCode = "${sessionScope.user_info.fUserCode}";
 
   });
 

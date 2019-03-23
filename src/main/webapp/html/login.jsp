@@ -57,9 +57,9 @@
 		<div class="ng-promise-box">
 			<div class="ng-promise w1200">
 				<p class="text">
-					<a class="icon1" href="javascript:;">版权所有</a> <a class="icon2"
-						href="javascript:;">LIL®</a> <a class="icon3"
-						style="margin-right: 0" href="javascript:;">15705212631</a>
+					<a class="icon1" href="javascript:;">7天无理由退换货</a> <a class="icon2"
+						href="javascript:;">满99元全场免邮</a> <a class="icon3"
+						style="margin-right: 0" href="javascript:;">100%品质保证</a>
 				</p>
 			</div>
 		</div>
@@ -71,11 +71,11 @@
         <span>|</span>
         <a href="javascript:;">售后服务</a>
         <span>|</span>
-        <a href="javascript:;">母婴资讯</a>
+        <a href="javascript:;">药品资讯</a>
         <span>|</span>
         <a href="javascript:;">关于货源</a>
       </p>
-      <p class="coty">母婴商城版权所有 &copy; 2012-2020</p>
+      <p class="coty">药品商城版权所有 &copy; 2012-2020</p>
     </div>
 	</div>
 	
