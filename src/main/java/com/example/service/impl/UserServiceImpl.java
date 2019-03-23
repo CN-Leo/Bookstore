@@ -4,6 +4,8 @@ package com.example.service.impl;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.common.BaseResultInfo;
+import com.example.common.SystemConstant;
 import com.example.common.SystemResultCodeConstant;
 import com.example.common.SystemResultMsgConstant;
 import com.example.dao.UserMapper;
@@ -22,6 +25,7 @@ import com.example.service.iface.IUserService;
 import com.example.util.DESTools;
 import com.example.util.DateTimeUtil;
 import com.example.util.SequenceGenerator;
+import com.example.util.SessionUtil;
 @Service("userServiceImpl")
 public class UserServiceImpl implements IUserService {
 	private Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
@@ -30,7 +34,7 @@ UserMapper userMapper;
 @Autowired
 SequenceGenerator logIdSeqGen;
 	@Override
-	public BaseResultInfo login(String fUserCode, String fUserPwd) {
+	public BaseResultInfo login(HttpServletRequest request,String fUserCode, String fUserPwd) {
 		BaseResultInfo baseResultInfo = new BaseResultInfo();
 		DESTools desTools = DESTools.getInstace();
 		DateTimeUtil.getTodayChar14();
@@ -52,6 +56,9 @@ SequenceGenerator logIdSeqGen;
 			{
 				Map<String,Object> retMap = new HashMap<String,Object>();
 				retMap.put("user", user);
+				//登陆成功后往session中塞入用户信息
+//				request.getCookies()
+				SessionUtil.setObjectAttribute(request, SystemConstant.USER_INFO, user);
 				baseResultInfo.setRetMap(retMap);
 			}
 		}

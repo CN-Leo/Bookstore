@@ -1,4 +1,5 @@
-<!DOCTYPE html>
+<%@ page contentType="text/html; charset=UTF-8" isELIgnored="false"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -17,12 +18,12 @@
     <div class="site-nav w1200">
       <p class="sn-back-home">
         <i class="layui-icon layui-icon-home"></i>
-        <a href="#">首页</a>
+        <a href="index.html">首页</a>
       </p>
       <div class="sn-quick-menu">
-        <div class="login" ng-if="obj.fUserName"><a href="#">{{obj.fUserName}}</a></div>
-        <div class="login" ng-if="!obj.fUserName"><a href="login.html">登陆</a></div>
-        <div class="sp-cart"><a href="shopcart.html">购物车</a><span>2</span></div>
+        <div class="login" ng-if="fUserName"><a href="#">{{fUserName}}</a></div>
+        <div class="login" ng-if="!fUserName"><a href="login.html">登陆</a></div>
+        <div class="sp-cart"><a href="shopcart.html">购物车</a></div>
       </div>
     </div>
   </div>
@@ -465,30 +466,22 @@
     </div>
   </div>
   <script type="text/javascript">
-  function parseURL(url){
-	  if(url.indexOf("?")<0)
-	  {
-		  return new Object();
-	  }
-	    var url = url.split("?")[1];
-	    var para = url.split("&");
-	    var len = para.length;
-	    var res = {};
-	    var arr = [];
-	    for(var i=0;i<len;i++){
-	        arr = para[i].split("=");
-	        res[arr[0]] = arr[1];
-	    }
-	    return res;
-	}
-var obj = parseURL(window.location.href);
+
+	  var test2 ="${sessionScope.user_info}"
   var mainApp = angular.module("mainApp", []);
 
-  mainApp.controller("mainController", function($scope) {
-	  
-     $scope.message = "In shape controller";
-     $scope.type = "Shape";
-     $scope.obj = obj;
+  mainApp.controller("mainController", function($scope,$http,$filter) {
+     $scope.fUserName = "${param.fUserName}";
+     $scope.fUserCode = "${param.fUserCode}";
+     $http({  
+         method: 'post',  
+         url: '/getIndexInfo',  
+         data: {},  // post请求时的参数  (AngularJS优先支持RESTFUL(不是SOAP接口)接口服务的方式(默认传JSON格式的数据));  
+         headers: {'Content-Type': 'text/plain'}  
+     }).success(function(data,status,headers,config) {  
+     }).error(function(data,status,headers,config) {  
+     });  
+
   });
 
 
@@ -507,24 +500,6 @@ layui.config({
         ,indicator:'none'
       }
       carousel.render(option);
-      // 模版引擎导入
-     // var ins = carousel.render(option);
-     // var html = demo.innerHTML;
-     // var listCont = document.getElementById('list-cont');
-     // // console.log(layui.router("#/about.html"))
-     //  mm.request({
-     //    url: '../json/index.json',
-     //    success : function(res){
-     //      console.log(res)
-     //      listCont.innerHTML = mm.renderHtml(html,res)
-     //      ins.reload(option);
-     //    },
-     //    error: function(res){
-     //      console.log(res);
-     //    }
-     //  })
-    
-
 });
   </script>
 </body>

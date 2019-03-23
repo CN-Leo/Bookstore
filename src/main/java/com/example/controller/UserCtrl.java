@@ -19,10 +19,12 @@ import com.alibaba.fastjson.JSONObject;
 import com.example.common.BaseResultInfo;
 import com.example.common.SystemConstant;
 import com.example.exception.CRUDException;
+import com.example.pojo.userInfo.UserInfoBean;
 import com.example.service.iface.IUserService;
 import com.example.util.DESTools;
 import com.example.util.DateTimeUtil;
 import com.example.util.RequstUtil;
+import com.example.util.SessionUtil;
 
 
 @Controller
@@ -37,7 +39,7 @@ public class UserCtrl {
 		logger.info("######login start######");
 		String fUserCode = (String)request.getParameter("fUserCode");//获取用户名
 		String fUserPwd = (String)request.getParameter("fUserPwd");//获取密码
-		BaseResultInfo baseResultInfo =  iUserService.login(fUserCode,fUserPwd);
+		BaseResultInfo baseResultInfo =  iUserService.login(request,fUserCode,fUserPwd);
 		return JSONObject.toJSONString(baseResultInfo);
 	}
 	@RequestMapping(method=RequestMethod.POST,value ="/register",produces = "text/plain")
@@ -71,6 +73,13 @@ public class UserCtrl {
 		{
 			logger.error("##注册未知错误##"+e1);
 		}
+		return JSONObject.toJSONString(baseResultInfo);
+	}
+	
+	@RequestMapping(method=RequestMethod.POST,value ="/getIndexInfo",produces = "text/plain")
+	public @ResponseBody String getIndexInfo(HttpServletRequest request,HttpServletResponse response) {
+		BaseResultInfo baseResultInfo = new BaseResultInfo();
+		UserInfoBean user = (UserInfoBean)SessionUtil.getObjectAttribute(request, "user_info");
 		return JSONObject.toJSONString(baseResultInfo);
 	}
 }

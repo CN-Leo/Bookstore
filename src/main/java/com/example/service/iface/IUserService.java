@@ -2,6 +2,8 @@ package com.example.service.iface;
 
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import com.example.common.BaseResultInfo;
 
 public interface IUserService {
@@ -11,6 +13,6 @@ public interface IUserService {
 	 * @param fUserPwd
 	 * @return
 	 */
-	BaseResultInfo login(String fUserCode,String fUserPwd);
+	BaseResultInfo login(HttpServletRequest request,String fUserCode,String fUserPwd);
 	BaseResultInfo register(Map<String,Object> param) throws Exception;
 }
