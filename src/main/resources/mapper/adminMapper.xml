@@ -59,6 +59,9 @@
 	<update id="updateAdminState">
 		update t_admin_info set f_admin_state = #{fAdminState} where f_admin_id=#{fAdminId}
 	</update>
+	<update id="updateAdmin">
+		update t_admin_info set f_admin_code = #{fAdminCode} where f_admin_id=#{fAdminId}
+	</update>
 	
 	<delete id="delAdmin">
 		delete from t_admin_info where f_admin_id=#{fAdminId}

@@ -100,6 +100,24 @@ public class AdminCtrl {
 		}
 		return JSONObject.toJSONString(baseResultInfo);
 	}
+	@RequestMapping(method=RequestMethod.POST,value ="/admin/updateAdmin",produces = { "application/xml", "application/json" })
+	public @ResponseBody String updateAdmin(HttpServletRequest request,HttpServletResponse response) {
+		Map<String,Object> param = new HashMap<String,Object>();
+		String fAdminId = String.valueOf(request.getParameter("fAdminId")).trim();
+		String fAdminCode = String.valueOf(request.getParameter("fAdminCode")).trim();
+		
+		param.put("fAdminId", fAdminId);
+		param.put("fAdminCode", fAdminCode);
+		BaseResultInfo baseResultInfo = new BaseResultInfo();
+		try {
+			baseResultInfo = iAdminService.updateAdmin(param);
+		} catch(Exception e) 
+		{
+			baseResultInfo.setResultCode("0");
+			baseResultInfo.setResultMsg("修改管理员失败！");
+		}
+		return JSONObject.toJSONString(baseResultInfo);
+	}
 	
 	@RequestMapping(method=RequestMethod.GET,value ="/admin/del",produces = { "application/xml", "application/json" })
 	public @ResponseBody String delAdmin(HttpServletRequest request,HttpServletResponse response) {

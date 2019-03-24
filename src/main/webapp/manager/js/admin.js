@@ -249,21 +249,22 @@ function updateAdminSub(fAdminId)
 		return;
 	}
 	$.ajax({
-		url:"manager/admin/updateAdmin",
+		url:"/manager/admin/updateAdmin",
 		async:false,
 		data:{"fAdminId":fAdminId,"fAdminCode":fAdminCode},
 		type:"POST",
-		dataType:"json",
-		success:function()
+		dataType:"text",
+		success:function(result)
 		{
-			if(XMLHttpRequest.status == "200") {
-				$('#updateUserModal').modal('hide');
-				$('#userPage').bootstrapTable("refresh");
-				alert("修改用户成功！");
-				return;
+			$('#updateAdminModal').modal('hide');
+			var obj = JSON.parse(result); 
+			if(obj.resultCode=="200")
+			{
+				alert("操作成功！");
+				refreshAdminTable();
+			}else{
+				alert(obj.resultMsg);
 			}
-		},
-		complete: function(XMLHttpRequest, textStatus) {
 		},
 		error:function(XMLHttpRequest, textStatus, errorThrown){
 		}

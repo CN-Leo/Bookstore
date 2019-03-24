@@ -118,4 +118,19 @@ public class AdminServiceImpl implements IAdminService{
 		return baseResultInfo;
 	}
 
+	@Override
+	public BaseResultInfo updateAdmin(Map<String, Object> param) {
+		BaseResultInfo baseResultInfo = new BaseResultInfo();
+		AdminInfoBean admin = adminMapper.queryAdminInfoByfAdminCode((String)param.get("fAdminCode"));
+		if(admin!=null) 
+		{
+			baseResultInfo.setResultCode("-2");
+			baseResultInfo.setResultMsg("账号已存在");
+		}else 
+		{
+			adminMapper.updateAdmin((String)param.get("fAdminId"),(String)param.get("fAdminCode"));
+		}
+		return baseResultInfo;
+	}
+
 }

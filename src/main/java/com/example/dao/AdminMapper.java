@@ -28,4 +28,6 @@ public interface AdminMapper {
 	void delAdmin(@Param("fAdminId")String fAdminId);
 
 	void updateAdminState(@Param("fAdminId") String fAdminId,@Param("fAdminState")String fAdminState);
+
+	void updateAdmin(@Param("fAdminId") String fAdminId,@Param("fAdminCode")String fAdminCode);
 }

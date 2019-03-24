@@ -22,4 +22,6 @@ public interface IAdminService {
 
 	BaseResultInfo actAdmin(String fAdminId, String fAdminState);
 
+	BaseResultInfo updateAdmin(Map<String, Object> param);
+
 }
