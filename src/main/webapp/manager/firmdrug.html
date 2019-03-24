@@ -1,0 +1,296 @@
+<!DOCTYPE HTML>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="renderer" content="webkit|ie-comp|ie-stand">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+		<meta http-equiv="Access-Control-Allow-Origin" content="*">
+		<meta content="telephone=no" name="format-detection">
+		<meta content="email=no" name="format-detection">
+		<link rel="stylesheet" type="text/css" href="libs/bootstrap-3.3.7/css/bootstrap.min.css" />
+		<link rel="stylesheet" href="libs/bootstrap-table/bootstrap-table.min.css" />
+		<link rel="stylesheet" type="text/css" href="css/H-ui.min.css" />
+		<link rel="stylesheet" type="text/css" href="css/H-ui.admin.css" />
+		<link rel="stylesheet" type="text/css" href="css/H-ui.doc.css" />
+		<link rel="stylesheet" type="text/css" href="Hui-iconfont108/iconfont.css">
+		<link rel="stylesheet" href="css/main.css" />
+		<script type="text/javascript" src="js/jquery.min.js"></script>
+		<title>药品智能平台</title>
+		<style>
+		.fileinput-button {
+            position: relative;
+            display: inline-block;
+        }
+
+        .fileinput-button input{
+            position: absolute;
+            right: 0px;
+            top: 0px;
+            opacity: 0;
+            -ms-filter: 'alpha(opacity=0)';
+            width:80px;
+            height:31px;
+        }
+		</style>
+	</head>
+
+	<body>
+		<header class="navbar-wrapper">
+			<div class="navbar navbar-black">
+				<div class="container-fluid cl">
+					<a class="logo navbar-logo hidden-xs" href="index.html">药品智能平台</a>
+					<nav class="navbar-userbar f-r hidden-xs hidden-sm">
+						<ul class="cl">
+							<li class="dropDown dropDown_hover">
+								<a href="#" class="dropDown_A"><span id="account"></span><i class="Hui-iconfont"></i></a>
+								<ul class="dropDown-menu menu radius box-shadow">
+									<li class="">
+										<a href="javascript:void(0)" onclick="updatepassword()">修改密码</a>
+									</li>
+									<li>
+										<a href="javascript:void(0)" onclick="loginOut()">退出登录</a>
+									</li>
+								</ul>
+							</li>
+
+						</ul>
+					</nav>
+				</div>
+			</div>
+		</header>
+		<aside class="Hui-aside">
+			<div class="menu_dropdown bk_2">
+				<ul>
+					<li>
+						<a href="index.html">产品管理</a>
+					</li>
+				</ul>
+				<ul>
+					<li>
+						<a href="firm.html" class="_target">厂家管理</a>
+					</li>
+				</ul>
+				<ul>
+					<li>
+						<a href="user.html">用户管理</a>
+					</li>
+				</ul>
+			</div>
+		</aside>
+
+		<div class="dislpayArrow hidden-xs">
+			<a class="pngfix" href="javascript:void(0);" onClick="displaynavbar(this)"></a>
+		</div>
+		<section class="Hui-article-box">
+			<nav class="breadcrumb">
+				<a class="maincolor" href="firm.html">厂家管理</a>
+				<span class="c-999 en">&gt;</span>
+				<span class="c-666" id="firmname"></span>
+			</nav>
+			<div class="Hui-article" style="margin:15px">
+				<div>
+					<input type="text" class="input-text radius" style="width:200px" placeholder="请输入产品名" id="name_like"/>
+					<button class="btn btn-success radius" onclick="refreshFirmDrugTable()"><i class="Hui-iconfont"></i> 搜索</button>
+					<button class="btn btn-primary radius" onclick="addFirmDrug()"><i class="Hui-iconfont"></i> 新增产品</button>
+					<span style="margin-left:50px;" class="btn btn-success fileinput-button">
+            				<span>批量导入</span>
+            				<input type="file" id="upload" accept=".xlsx" multiple="multiple">
+        			</span>
+				</div>
+				<div style="width: 100%;margin-top:20px">
+					<table id="firmDrugPage"></table>
+				</div>
+			</div>
+		</section>
+		
+		<div class="modal fade" id="addFirmDrugModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+							&times;
+						</button>
+						<h5 class="modal-title" id="myModalLabel">添加公司产品</h5>
+					</div>
+					<form class="form-horizontal">
+						<div class="modal-body">
+							<div class="form-group">
+								<label class="col-sm-3 control-label">产品名</label>
+								<div class="col-sm-6">
+									<input type="text" placeholder="产品名（必填）" class="form-control" id="addDrugName"  style="width:100%">
+								</div>
+								<div class="col-sm-1 bt-div" >*</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">登记证号</label>
+								<div class="col-sm-6">
+									<input type="text" placeholder="登记证号（选填）" class="form-control" id="addPid"  style="width:100%">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">类别</label>
+								<div class="col-sm-6">
+									<input type="text" placeholder="类别（必填）" class="form-control" id="addType"  style="width:100%">
+								</div>
+								<div class="col-sm-1 bt-div" >*</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">剂型</label>
+								<div class="col-sm-6">
+									<input type="text" placeholder="剂型（选填）" class="form-control" id="addForm"  style="width:100%">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">含量</label>
+								<div class="col-sm-6">
+									<input type="text" placeholder="含量（选填）" class="form-control" id="addContent"  style="width:100%">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">登记证到期日</label> 
+								<div class="col-sm-6">
+									<input type="text" placeholder="登记证到期日（选填）" class="form-control layui-input" id="addExpiryTime"  style="width:100%">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">备注</label>
+								<div class="col-sm-6">
+									<input type="text" placeholder="备注（选填）" class="form-control" id="addRemarks"  style="width:100%">
+								</div>
+							</div>
+						</div>
+					</form>
+						
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">关闭
+						</button>
+						<button type="button" class="btn btn-primary" id="addbtn">
+							确定
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="modal fade" id="updateFirmDrugModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+							&times;
+						</button>
+						<h5 class="modal-title" id="myModalLabel">修改公司产品</h5>
+					</div>
+					<form class="form-horizontal">
+						<div class="modal-body">
+							<div class="form-group">
+								<label class="col-sm-3 control-label">产品名</label>
+								<div class="col-sm-6">
+									<input type="text" placeholder="产品名（必填）" class="form-control" id="updateDrugName"  style="width:100%">
+								</div>
+								<div class="col-sm-1 bt-div" >*</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">登记证号</label>
+								<div class="col-sm-6">
+									<input type="text" placeholder="登记证号（选填）" class="form-control" id="updatePid"  style="width:100%">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">类别</label>
+								<div class="col-sm-6">
+									<input type="text" placeholder="类别（必填）" class="form-control" id="updateType"  style="width:100%">
+								</div>
+								<div class="col-sm-1 bt-div" >*</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">剂型</label>
+								<div class="col-sm-6">
+									<input type="text" placeholder="剂型（选填）" class="form-control" id="updateForm"  style="width:100%">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">含量</label>
+								<div class="col-sm-6">
+									<input type="text" placeholder="含量（选填）" class="form-control" id="updateContent"  style="width:100%">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">登记证到期日</label> 
+								<div class="col-sm-6">
+									<input type="text" placeholder="登记证到期日（选填）" class="form-control layui-input" id="updateExpiryTime"  style="width:100%">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">备注</label>
+								<div class="col-sm-6">
+									<input type="text" placeholder="备注（选填）" class="form-control" id="updateRemarks"  style="width:100%">
+								</div>
+							</div>
+						</div>
+					</form>
+						
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">关闭
+						</button>
+						<button type="button" class="btn btn-primary" id="updatebtn">
+							确定
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script type="text/javascript" src="libs/layer/layer.js"></script>
+		<script type="text/javascript" src="libs/laydate/laydate.js"></script>
+		<script type="text/javascript" src="js/H-ui.min.js"></script>
+		<script type="text/javascript" src="js/H-ui.admin.www.js"></script>
+		<script type="text/javascript" src="libs/bootstrap-table/bootstrap-table.min.js"></script>
+		<script type="text/javascript" src="libs/bootstrap-table/bootstrap-table-zh-CN.min.js"></script>
+		<script type="text/javascript" src="js/login.js"></script>
+		<script type="text/javascript" src="js/firmdrug.js"></script>
+		<script type="text/javascript">
+			laydate.render({
+	  			elem: '#addExpiryTime' //指定元素
+			});
+			laydate.render({
+	  			elem: '#updateExpiryTime' //指定元素updateExpiryTime
+			});
+			//初始化首页
+			isLogin();
+			id = getQueryString("id");
+			firmname = decodeURI(getQueryString("firmname"));
+			$("#firmname").text(firmname);
+			queryFirmDrugPage();
+			//导入
+			$("#upload").change(function() {
+				var _input = $('#upload');
+				var formData = new FormData();
+				formData.append("file", $("#upload").get(0).files[0]);
+				$.ajax({
+					url: ip + "/upload/firm/" + id,
+					type: 'POST',
+					data: formData,
+					async: false,
+					cache: false,
+					contentType: false,
+					processData: false,
+					success: function(data) {
+						
+					},
+					complete: function(XMLHttpRequest, textStatus) {
+						if(XMLHttpRequest.status == "200") {
+							$("#firmDrugPage").bootstrapTable('refresh');
+							alert("导入产品名成功！");
+							return;
+						}
+					},
+					error: function(returndata) {
+						
+					}
+				});
+				_input.val('');
+				
+			});
+		</script>
+	</body>
+</html>

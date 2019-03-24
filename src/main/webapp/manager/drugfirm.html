@@ -1,0 +1,387 @@
+<!DOCTYPE HTML>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="renderer" content="webkit|ie-comp|ie-stand">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+		<meta http-equiv="Access-Control-Allow-Origin" content="*">
+		<meta content="telephone=no" name="format-detection">
+		<meta content="email=no" name="format-detection">
+		<link rel="stylesheet" type="text/css" href="libs/bootstrap-3.3.7/css/bootstrap.min.css" />
+		<link rel="stylesheet" href="libs/bootstrap-table/bootstrap-table.min.css" />
+		<link rel="stylesheet" type="text/css" href="css/H-ui.min.css" />
+		<link rel="stylesheet" type="text/css" href="css/H-ui.admin.css" />
+		<link rel="stylesheet" type="text/css" href="css/H-ui.doc.css" />
+		<link rel="stylesheet" type="text/css" href="Hui-iconfont108/iconfont.css">
+		<link rel="stylesheet" href="libs/searchableSelect/jquery.searchableSelect.css" />
+		<link rel="stylesheet" href="css/main.css" />
+		<script type="text/javascript" src="js/jquery.min.js"></script>
+		<script type="text/javascript" src="libs/searchableSelect/jquery.searchableSelect.js" ></script>
+		<title>药品智能平台</title>
+		<style>
+		.fileinput-button {
+            position: relative;
+            display: inline-block;
+        }
+
+        .fileinput-button input{
+            position: absolute;
+            right: 0px;
+            top: 0px;
+            opacity: 0;
+            -ms-filter: 'alpha(opacity=0)';
+            width:80px;
+            height:31px;
+        }
+		</style>
+	</head>
+
+	<body>
+		<header class="navbar-wrapper">
+			<div class="navbar navbar-black">
+				<div class="container-fluid cl">
+					<a class="logo navbar-logo hidden-xs" href="index.html">药品智能平台</a>
+					<nav class="navbar-userbar f-r hidden-xs hidden-sm">
+						<ul class="cl">
+							<li class="dropDown dropDown_hover">
+								<a href="#" class="dropDown_A"><span id="account"></span><i class="Hui-iconfont"></i></a>
+								<ul class="dropDown-menu menu radius box-shadow">
+									<li class="">
+										<a href="javascript:void(0)" onclick="updatepassword()">修改密码</a>
+									</li>
+									<li>
+										<a href="javascript:void(0)" onclick="loginOut()">退出登录</a>
+									</li>
+								</ul>
+							</li>
+
+						</ul>
+					</nav>
+				</div>
+			</div>
+		</header>
+		<aside class="Hui-aside">
+			<div class="menu_dropdown bk_2">
+				<ul>
+					<li>
+						<a href="index.html" class="_target">产品管理</a>
+					</li>
+				</ul>
+				<ul>
+					<li>
+						<a href="firm.html">厂家管理</a>
+					</li>
+				</ul>
+				<ul>
+					<li>
+						<a href="user.html">用户管理</a>
+					</li>
+				</ul>
+			</div>
+		</aside>
+
+		<div class="dislpayArrow hidden-xs">
+			<a class="pngfix" href="javascript:void(0);" onClick="displaynavbar(this)"></a>
+		</div>
+		<section class="Hui-article-box">
+			<nav class="breadcrumb">
+				<a class="maincolor" href="index.html">产品管理</a>
+				<span class="c-999 en">&gt;</span>
+				<span class="c-666" id="drugName"></span>
+			</nav>
+			<div class="Hui-article" style="margin:15px">
+				<div>
+					<select id="province_like" style="width:150px;height:30px;border-radius: 4px;">
+						<option value="">请选择省级</option>
+						<option value="北京">北京</option><option value="天津">天津</option>
+						<option value="上海">上海</option><option value="重庆">重庆</option>
+						<option value="河北">河北</option><option value="山西">山西</option>
+						<option value="台湾">台湾</option><option value="辽宁">辽宁</option>
+						<option value="吉林">吉林</option><option value="黑龙江">黑龙江</option>
+						<option value="江苏">江苏</option><option value="浙江">浙江</option>
+						<option value="安徽">安徽</option><option value="福建">福建</option>
+						<option value="江西">江西</option><option value="山东">山东</option>
+						<option value="河南">河南</option><option value="湖北">湖北</option>
+						<option value="湖南">湖南</option><option value="广东">广东</option>
+						<option value="甘肃">甘肃</option><option value="四川">四川</option>
+						<option value="贵州">贵州</option><option value="海南">海南</option>
+						<option value="云南">云南</option><option value="青海">青海</option>
+						<option value="陕西">陕西</option><option value="广西">广西</option>
+						<option value="西藏">西藏</option><option value="宁夏">宁夏</option>
+						<option value="新疆">新疆</option><option value="内蒙古">内蒙古</option>
+						<option value="澳门">澳门</option><option value="香港">香港</option>
+					</select>
+					<input type="text" class="input-text radius" style="width:200px" placeholder="请输入登记证号/公司名" id="query_like"/>
+					<button class="btn btn-success radius" onclick="refreshDrugTable()"><i class="Hui-iconfont"></i> 搜索</button>
+					<button class="btn btn-primary radius" onclick="addDrug()"><i class="Hui-iconfont"></i> 新增产品</button>
+					<span style="margin-left:50px;" class="btn btn-success fileinput-button">
+            				<span>批量导入</span>
+            				<input type="file" id="upload" accept=".xlsx" multiple="multiple">
+        			</span>
+				</div>
+				<div style="width: 100%;margin-top:20px">
+					<table id="drugPage"></table>
+				</div>
+			</div>
+		</section>
+		
+		<div class="modal fade" id="addDrugModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+							&times;
+						</button>
+						<h5 class="modal-title" id="myModalLabel">添加产品</h5>
+					</div>
+					<form class="form-horizontal">
+						<div class="modal-body">
+							<div class="form-group">
+								<label class="col-sm-3 control-label">产品名</label>
+								<div class="col-sm-6">
+									<input type="text" disabled="disabled" placeholder="产品名（必填）" class="form-control" id="addDrugName"  style="width:100%">
+								</div>
+								<div class="col-sm-1 bt-div" >*</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">登记证号</label>
+								<div class="col-sm-6">
+									<input type="text" placeholder="登记证号（选填）" class="form-control" id="addPid"  style="width:100%">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">类别</label>
+								<div class="col-sm-6">
+									<input type="text" placeholder="类别（必填）" class="form-control" id="addType"  style="width:100%">
+								</div>
+								<div class="col-sm-1 bt-div" >*</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">剂型</label>
+								<div class="col-sm-6">
+									<input type="text" placeholder="剂型（选填）" class="form-control" id="addForm"  style="width:100%">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">含量</label>
+								<div class="col-sm-6">
+									<input type="text" placeholder="含量（选填）" class="form-control" id="addContent"  style="width:100%">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">登记证到期日</label> 
+								<div class="col-sm-6">
+									<input type="text" placeholder="登记证到期日（选填）" class="form-control layui-input" id="addExpiryTime"  style="width:100%">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">备注</label> 
+								<div class="col-sm-6">
+									<input type="text" placeholder="备注（选填）" class="form-control layui-input" id="addRemarks"  style="width:100%">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">公司</label> 
+								<div class="col-sm-6">
+									<input type="text" placeholder="公司名（必填）" class="form-control layui-input" id="addFirmname"  style="width:100%">
+								</div>
+								<div class="col-sm-1 bt-div" >*</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">省份</label>
+								<div class="col-sm-6">
+									<input type="text" placeholder="省份（必填）" class="form-control" id="addProvince"  style="width:100%">
+								</div>
+								<div class="col-sm-1 bt-div" >*</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">地区</label>
+								<div class="col-sm-6">
+									<input type="text" placeholder="地区（选填）" class="form-control" id="addArea"  style="width:100%">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">联系人</label>
+								<div class="col-sm-6">
+									<input type="text" placeholder="联系人（选填）" class="form-control" id="addLinkman"  style="width:100%">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">电话</label>
+								<div class="col-sm-6">
+									<input type="text" placeholder="电话（选填）" class="form-control" id="addPhone"  style="width:100%">
+								</div>
+							</div>
+							
+						</div>
+					</form>
+						
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">关闭
+						</button>
+						<button type="button" class="btn btn-primary" id="addbtn">
+							确定
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="modal fade" id="updateDrugModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+							&times;
+						</button>
+						<h5 class="modal-title" id="myModalLabel">修改公司产品</h5>
+					</div>
+					<form class="form-horizontal">
+						<div class="modal-body">
+							<div class="form-group">
+								<label class="col-sm-3 control-label">产品名</label>
+								<div class="col-sm-6">
+									<input type="text" placeholder="产品名（必填）" class="form-control" id="updateDrugName"  style="width:100%">
+								</div>
+								<div class="col-sm-1 bt-div" >*</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">登记证号</label>
+								<div class="col-sm-6">
+									<input type="text" placeholder="登记证号（选填）" class="form-control" id="updatePid"  style="width:100%">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">类别</label>
+								<div class="col-sm-6">
+									<input type="text" placeholder="类别（必填）" class="form-control" id="updateType"  style="width:100%">
+								</div>
+								<div class="col-sm-1 bt-div" >*</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">剂型</label>
+								<div class="col-sm-6">
+									<input type="text" placeholder="剂型（选填）" class="form-control" id="updateForm"  style="width:100%">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">含量</label>
+								<div class="col-sm-6">
+									<input type="text" placeholder="含量（选填）" class="form-control" id="updateContent"  style="width:100%">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">登记证到期日</label> 
+								<div class="col-sm-6">
+									<input type="text" placeholder="登记证到期日（选填）" class="form-control layui-input" id="updateExpiryTime"  style="width:100%">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">备注</label> 
+								<div class="col-sm-6">
+									<input type="text" placeholder="备注（选填）" class="form-control" id = "updateRemarks" style="width:100%">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">公司</label> 
+								<div class="col-sm-6">
+									<input type="text" placeholder="公司名（必填）" class="form-control layui-input" id="updateFirmname"  style="width:100%">
+								</div>
+								<div class="col-sm-1 bt-div" >*</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">省份</label>
+								<div class="col-sm-6">
+									<input type="text" placeholder="省份（必填）" class="form-control" id="updateProvince"  style="width:100%">
+								</div>
+								<div class="col-sm-1 bt-div" >*</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">地区</label>
+								<div class="col-sm-6">
+									<input type="text" placeholder="地区（必填）" class="form-control" id="updateArea"  style="width:100%">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">联系人</label>
+								<div class="col-sm-6">
+									<input type="text" placeholder="联系人（选填）" class="form-control" id="updateLinkman"  style="width:100%">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">电话</label>
+								<div class="col-sm-6">
+									<input type="text" placeholder="电话（选填）" class="form-control" id="updatePhone"  style="width:100%">
+								</div>
+							</div>
+							
+						</div>
+					</form>
+						
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">关闭
+						</button>
+						<button type="button" class="btn btn-primary" id="updatebtn">
+							确定
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script type="text/javascript" src="libs/layer/layer.js"></script>
+		<script type="text/javascript" src="libs/laydate/laydate.js"></script>
+		<script type="text/javascript" src="js/H-ui.min.js"></script>
+		<script type="text/javascript" src="js/H-ui.admin.www.js"></script>
+		<script type="text/javascript" src="libs/bootstrap-table/bootstrap-table.min.js"></script>
+		<script type="text/javascript" src="libs/bootstrap-table/bootstrap-table-zh-CN.min.js"></script>
+		<script type="text/javascript" src="js/login.js"></script>
+		<script type="text/javascript" src="js/drugfirm.js"></script>
+		<script type="text/javascript">
+			$("#province_like").searchableSelect();
+			laydate.render({
+	  			elem: '#addExpiryTime' //指定元素
+			});
+			laydate.render({
+	  			elem: '#updateExpiryTime' //指定元素updateExpiryTime
+			});
+			//初始化首页
+			isLogin();
+			id = getQueryString("id");
+			drugName = decodeURI(getQueryString("drug_name"));
+			$("#drugName").text(drugName);
+			queryNameDrugPage();
+			$("#upload").change(function() {
+				var _input = $('#upload');
+				var formData = new FormData();
+				formData.append("file", $("#upload").get(0).files[0]);
+				$.ajax({
+					url: ip + "/upload/dname/" + id,
+					type: 'POST',
+					data: formData,
+					async: false,
+					cache: false,
+					contentType: false,
+					processData: false,
+					success: function(data) {
+						
+					},
+					complete: function(XMLHttpRequest, textStatus) {
+						if(XMLHttpRequest.status == "200") {
+							$("#drugPage").bootstrapTable('refresh');
+							alert("导入产品名成功！");
+						}
+					},
+					error:function(XMLHttpRequest, textStatus, errorThrown){
+						if(XMLHttpRequest.status=="402")
+						{
+							alert("请把药品导入对应的产品下面！");
+						}else if(XMLHttpRequest.status=="400"){
+							alert("导入产品名失败！");
+						}
+					}
+				});
+				_input.val('');
+			});
+		</script>
+	</body>
+</html>

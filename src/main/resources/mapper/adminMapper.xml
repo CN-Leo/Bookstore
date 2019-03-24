@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.dao.AdminMapper">
+	<resultMap type="com.example.pojo.adminInfo.AdminInfoBean"
+		id="BaseResultMap">
+		<result column="F_ADMIN_ID" property="fAdminId" />
+		<result column="F_ADMIN_CODE" property="fAdminCode" />
+		<result column="F_ADMIN_PWD" property="fAdminPwd" />
+		<result column="F_ADMIN_ROLE" property="fAdminRole" />
+		<result column="F_ADMIN_STATE" property="fAdminState" />
+		<result column="F_CREATE_TIME" property="fCreateTime" />
+		<result column="F_LAST_LOGIN_TIME" property="fLastLoginTime" />
+	</resultMap>
+	<insert id="register">
+		insert into t_admin_info
+		(F_ADMIN_ID,
+		F_ADMIN_CODE,
+		F_ADMIN_PWD,
+		F_ADMIN_ROLE,
+		F_CREATE_TIME)
+		values (
+		#{fAdminId},#{fAdminCode},#{fAdminPwd},#{fAdminRole},#{fCreateTime}
+		)
+	</insert>
+	<select id="queryAdminInfoByfAdminCode" resultMap="BaseResultMap">
+		select * from t_admin_info where f_admin_code =#{fAdminCode}
+	</select>
+	<select id="queryAdminInfoByLogin" resultMap="BaseResultMap">
+		select * from t_admin_info where f_admin_code =#{fAdminCode} and f_admin_pwd= #{fAdminPwd}
+	</select>
+	<select id="queryAdminInfoById" resultMap="BaseResultMap">
+		select * from t_admin_info where f_admin_id =#{fAdminId}
+	</select>
+	<select id="queryAdminCount" parameterType="map" resultType="int">
+		select count(1) from t_admin_info where 1 =1
+		<if test="null != searchLike">
+			and F_ADMIN_CODE like '%${searchLike}%'
+		</if>
+	</select>
+	<select id="queryAdminInfoPage" parameterType="map" resultMap="BaseResultMap">
+		select * from t_admin_info where 1 =1
+		<if test="null != searchLike">
+			and F_ADMIN_CODE like '%${searchLike}%'
+		</if>
+		<if test="null != sortName and null!= sortOrder">
+			order by ${sortName} ${sortOrder}
+		</if>
+		<if test="null != limit and null != offset">
+			limit #{limit} OFFSET #{offset}
+		</if>
+	</select>
+	
+	<update id="updateAdminLastLoginTime">
+		update t_admin_info set f_last_login_time = #{fLastLoginTime} where f_admin_id= #{fAdminId}
+	</update>
+	<update id="updateAdminPwd">
+		update t_admin_info set f_admin_pwd = #{fAdminPwd} where f_admin_id=#{fAdminId}
+	</update>
+	<update id="updateAdminState">
+		update t_admin_info set f_admin_state = #{fAdminState} where f_admin_id=#{fAdminId}
+	</update>
+	
+	<delete id="delAdmin">
+		delete from t_admin_info where f_admin_id=#{fAdminId}
+	</delete>
+</mapper>

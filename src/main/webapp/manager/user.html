@@ -1,0 +1,197 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="renderer" content="webkit|ie-comp|ie-stand">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+		<meta http-equiv="Access-Control-Allow-Origin" content="*">
+		<meta content="telephone=no" name="format-detection">
+		<meta content="email=no" name="format-detection">
+		<link rel="stylesheet" type="text/css" href="libs/bootstrap-3.3.7/css/bootstrap.min.css" />
+		<link rel="stylesheet" href="libs/bootstrap-table/bootstrap-table.min.css" />
+		<link rel="stylesheet" type="text/css" href="css/H-ui.min.css" />
+		<link rel="stylesheet" type="text/css" href="css/H-ui.admin.css" />
+		<link rel="stylesheet" type="text/css" href="css/H-ui.doc.css" />
+		<link rel="stylesheet" type="text/css" href="Hui-iconfont108/iconfont.css">
+		<link rel="stylesheet" href="css/main.css" />
+		<script type="text/javascript" src="js/jquery.min.js"></script>
+		<title>药品管理系统后台</title>
+	</head>
+
+	<body>
+		<header class="navbar-wrapper">
+			<div class="navbar navbar-black">
+				<div class="container-fluid cl">
+					<a class="logo navbar-logo hidden-xs" href="index.html">药品智能平台</a>
+					<nav class="navbar-userbar f-r hidden-xs hidden-sm">
+						<ul class="cl">
+							<li class="dropDown dropDown_hover">
+								<a href="#" class="dropDown_A"><span id="account"></span><i class="Hui-iconfont"></i></a>
+								<ul class="dropDown-menu menu radius box-shadow">
+									<li class="">
+										<a href="javascript:void(0)" onclick="updatepassword()">修改密码</a>
+									</li>
+									<li>
+										<a href="javascript:void(0)" onclick="loginOut()">退出登录</a>
+									</li>
+								</ul>
+							</li>
+
+						</ul>
+					</nav>
+				</div>
+			</div>
+		</header>
+		<aside class="Hui-aside">
+			<div class="menu_dropdown bk_2">
+				<ul>
+					<li>
+						<a href="admin.html" class="_target">管理员管理</a>
+					</li>
+				</ul>
+				<ul>
+					<li>
+						<a href="index.html">产品管理</a>
+					</li>
+				</ul>
+				<ul>
+					<li>
+						<a href="firm.html">厂家管理</a>
+					</li>
+				</ul>				
+				<dl id="menu_2">
+					<dt class="">主菜单<i class="Hui-iconfont menu_dropdown-arrow"></i></dt>
+					<dd style="display: none;">
+						<ul>
+							<li><a href="http://www.h-ui.net/Hui-2.1-gridSystem.shtml">副菜单1</a></li>
+							<li><a href="http://www.h-ui.net/Hui-2.2-show&amp;hide.shtml">副菜单2</a></li>
+						</ul>
+					</dd>
+				</dl>
+			</div>
+		</aside>
+		<div class="dislpayArrow hidden-xs">
+			<a class="pngfix" href="javascript:void(0);" onClick="displaynavbar(this)"></a>
+		</div>
+		<section class="Hui-article-box">
+			<nav class="breadcrumb">
+				<a class="maincolor" href="javascript:void(0)">用户管理</a>
+				<!--<span class="c-999 en">&gt;</span>
+		<span class="c-666">概述</span>-->
+			</nav>
+			<div class="Hui-article" style="margin:15px">
+				<div>
+					<input type="text" class="input-text radius" style="width:200px" placeholder="请输入用户名或者手机号" id="search_like"/>
+					<button class="btn btn-success radius" onclick="refreshUserTable()"><i class="Hui-iconfont"></i> 搜索</button>
+					<button class="btn btn-primary radius" onclick="addUser()"><i class="Hui-iconfont"></i> 新增用户</button>
+				</div>
+				<div style="width: 100%;margin-top:20px">
+					<table id="userPage"></table>
+				</div>
+			</div>
+		</section>
+		<div class="modal fade" id="addUserModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+							&times;
+						</button>
+						<h5 class="modal-title" id="myModalLabel">添加管理员</h5>
+					</div>
+					<form class="form-horizontal">
+						<div class="modal-body">
+							<div class="form-group">
+								<label class="col-sm-3 control-label">账号</label>
+								<div class="col-sm-6">
+									<input type="text" placeholder="用于登录（必填）" class="form-control" id="addCode"  style="width:100%">
+								</div>
+								<div class="col-sm-1 bt-div" >*</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">角色</label>
+								<div class="col-sm-6">
+									<select class="form-control" id="addrole" disabled="disabled">
+						            	<option value="1">超级管理员</option>
+						            	<option value="0" selected>普通用户</option>
+						            </select>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label"></label>
+								<div class="col-sm-6">
+									<span style="color:red;font-size: 12px;font-weight: 700;">注：默认登录密码为123456</span>
+								</div>
+							</div>
+						</div>
+					</form>
+						
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">关闭
+						</button>
+						<button type="button" class="btn btn-primary" id="addAdmin">
+							确定
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="modal fade" id="updateUserModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+							&times;
+						</button>
+						<h5 class="modal-title" id="myModalLabel">修改管理员</h5>
+					</div>
+					<form class="form-horizontal">
+						<div class="modal-body">
+							<div class="form-group">
+								<label class="col-sm-3 control-label">姓名</label>
+								<div class="col-sm-6">
+									<input type="text" placeholder="真实姓名（必填）" class="form-control" id="updatename"  style="width:100%">
+								</div>
+								<div class="col-sm-1 bt-div" >*</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">账号</label>
+								<div class="col-sm-6">
+									<input type="text" placeholder="用于登录（必填）" class="form-control" id="updateaccount"  style="width:100%">
+								</div>
+								<div class="col-sm-1 bt-div" >*</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">手机号</label>
+								<div class="col-sm-6">
+									<input type="text" placeholder="手机号（选填）" class="form-control" id="updatephone"  style="width:100%">
+								</div>
+							</div>
+						</div>
+					</form>
+						
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">关闭
+						</button>
+						<button type="button" class="btn btn-primary" id="updateUser">
+							确定
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script type="text/javascript" src="libs/layer/layer.js"></script>
+		<script type="text/javascript" src="js/H-ui.min.js"></script>
+		<script type="text/javascript" src="js/H-ui.admin.www.js"></script>
+		<script type="text/javascript" src="libs/bootstrap-table/bootstrap-table.min.js" ></script>
+		<script type="text/javascript" src="libs/bootstrap-table/bootstrap-table-zh-CN.min.js" ></script>
+		<script type="text/javascript" src="js/login.js" ></script>
+		<script type="text/javascript" src="js/user.js" ></script>
+		<script type="text/javascript">
+			//初始化首页
+			queryUserPage();
+			//isLogin();
+		</script>
+	</body>
+</html>
