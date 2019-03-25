@@ -71,11 +71,31 @@ function queryAdminPage() {
 			field: 'fCreateTime',
 			align:'center',
 			sortable: false,
+			formatter:function(value,row,index)
+			{
+				if(value)
+				{
+					return formatDate14(value)
+				}else{
+					return "--"
+				}
+				
+			}
 		},{
 			title: '最近登录时间',
 			field: 'fLastLoginTime',
 			align:'center',
 			sortable: false,
+			formatter:function(value,row,index)
+			{
+				if(value)
+				{
+					return formatDate14(value)
+				}else{
+					return "--"
+				}
+				
+			}
 		},{
 			field: 'operate',
 	    	title: '操作',
