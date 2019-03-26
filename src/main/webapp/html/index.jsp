@@ -73,43 +73,18 @@
           <div class="nav-con">
             <ul class="normal-nav layui-clear">
               <li class="nav-item">
-                <div class="title">奶粉辅食</div>
-                <p><a href="#">奶粉</a><a href="#">捕食</a><a href="#">营养品</a></p>
+                <div class="title">中药</div>
+                <p><a href="#">处方药</a><a href="#">非处方药</a></p>
                 <i class="layui-icon layui-icon-right"></i>
               </li>
               <li class="nav-item">
-                <div class="title">纸尿裤</div>
-                <p><a href="#">纸尿裤</a><a href="#">婴儿湿巾</a></p>
+                <div class="title">西药</div>
+                 <p><a href="#">处方药</a><a href="#">非处方药</a></p>
                 <i class="layui-icon layui-icon-right"></i>
               </li>
               <li class="nav-item">
-                <div class="title">洗护用品</div>
-                <p><a href="#">母婴洗护用品</a><a href="#">孕婴童用品</a></p>
-                <i class="layui-icon layui-icon-right"></i>
-              </li>
-              <li class="nav-item">
-                <div class="title">儿童玩具</div>
-                <p><a href="#">婴幼玩具</a><a href="#">遥控玩具</a><a href="#">积木拼插</a></p>
-                <i class="layui-icon layui-icon-right"></i>
-              </li>
-              <li class="nav-item">
-                <div class="title">车窗座椅</div>
-                <p><a href="#">婴儿推车</a><a href="#">儿童安全座骑</a></p>
-                <i class="layui-icon layui-icon-right"></i>
-              </li>
-              <li class="nav-item">
-                <div class="title">儿童童鞋</div>
-                <p><a href="#">童装</a><a href="#">童鞋</a><a href="#">婴童内衣及配饰</a></p>
-                <i class="layui-icon layui-icon-right"></i>
-              </li>
-              <li class="nav-item">
-                <div class="title">儿童图片</div>
-                <p><a href="#">0-2岁</a><a href="#">早教启蒙</a><a href="#">孕产育儿</a></p>
-                <i class="layui-icon layui-icon-right"></i>
-              </li>
-              <li class="nav-item nobor">
-                <div class="title">孕妈专区</div>
-                <p><a href="#">孕妇装</a><a href="#">背婴带</a><a href="#">母婴服务</a></p>
+                <div class="title">复方药</div>
+                <p><a href="#">处方药</a><a href="#">非处方药</a></p>
                 <i class="layui-icon layui-icon-right"></i>
               </li>
             </ul>
@@ -207,40 +182,6 @@
         </div>    
       </div>
     </div>
-
-
-
-
-
-
-    <div class="hot-recommend-con">
-       <div class="hot-con1 w1200 layui-clear">
-          <div class="item">
-            <h4>热销推荐</h4>
-            <div class="big-img">
-              <a href="javascript:;"><img src="../res/static/img/hot1.png"></a>
-            </div>
-            <div class="small-img">
-              <a href="javascript:;"><img src="../res/static/img/hot2.png" alt=""></a>
-            </div>
-          </div>
-          <div class="item">
-            <div class="top-img">
-              <a href="javascript:;"><img src="../res/static/img/hot5.jpg"></a>
-            </div>
-            <div class="bottom-img">
-              <a href="javascript:;"><img src="../res/static/img/hot6.jpg"></a>
-              <a class="baby-cream" href="javascript:;"><img src="../res/static/img/hot7.jpg"></a>
-            </div>
-          </div>
-          <div class="item item1 margin0 padding0">
-            <a href="javascript:;"><img src="../res/static/img/hot8.jpg"></a>
-            <a href="javascript:;"><img class="btm-img" src="../res/static/img/hot9.jpg"></a>
-          </div>
-      </div>
-    </div>
-    
-
 
     <div class="product-cont w1200" id="product-cont">
       <div class="product-item product-item1 layui-clear">
