@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.dao.DrugMapper">
+	<resultMap type="com.example.pojo.drugInfo.DrugInfoBean"
+		id="BaseResultMap">
+		<result column="F_ID" property="fId" />
+		<result column="F_DRUG_CODE" property="fDrugCode" />
+		<result column="F_DRUG_NAME" property="fDrugName" />
+		<result column="F_DRUG_TYPE" property="fDrugType" />
+		<result column="F_DRUG_PRICE" property="fDrugPrice" />
+		<result column="F_IS_PRESCRIPTION" property="fIsPrescription" />
+		<result column="F_OPER_TIME" property="fOperTime" />
+		<result column="F_DRUG_IMG" property="fDrugImg" />
+		<result column="F_CONTENT" property="fContent" />
+	</resultMap>
+	
+	<insert id="addDrug" parameterType="map">
+		insert into t_drug_info (F_ID,F_DRUG_CODE,F_DRUG_NAME,F_DRUG_TYPE,F_DRUG_PRICE,F_IS_PRESCRIPTION,F_OPER_TIME,F_DRUG_IMG,F_CONTENT)
+		value (#{fId},#{fDrugCode},#{fDruName},#{fDrugType},#{fDrugPrice},#{fIsPrescription},#{fOperTime},#{fDrugImg},#{fContent})
+	</insert>
+	
+	<select id="queryDrugCount" parameterType="map">
+		select count(1) from t_drug_info where 1 =1
+		<if test="null != searchLike">
+			and (F_DRUG_CODE like '%${searchLike}%' or 
+				F_DRUG_NAME like '%${searchLike}%'
+			)
+		</if>
+	</select>
+	
+	<select id="queryDrugInfoPage" parameterType="map">
+		select * from t_drug_info where 1 =1
+		<if test="null != searchLike">
+			and (F_DRUG_CODE like '%${searchLike}%' or 
+				F_DRUG_NAME like '%${searchLike}%'
+			)
+		</if>
+		<if test="null != sortName and null!= sortOrder">
+			order by ${sortName} ${sortOrder}
+		</if>
+		<if test="null != limit and null != offset">
+			limit #{limit} OFFSET #{offset}
+		</if>
+	</select>
+	
+	<update id="updateDrug" parameterType="map">
+	update t_drug_info set f_drug_code = #{fDrugCode},
+	f_drug_name = #{fDrugName},
+	f_drug_type = #{fDrugType},
+	f_drug_price = #{fDrugPrice},
+	f_is_prescription = #{fIfPrescription},
+	f_oper_time = #{fOperTime},
+	f_drug_img = #{fDrugImg},
+	f_content = #{fContent}
+	where f_id=#{fId}
+	</update>
+	
+	<delete id="delDrug">
+		delete from t_drug_info where f_id=#{fId}
+	</delete>
+</mapper>
