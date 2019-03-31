@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.example.common.BaseResultInfo;
 import com.example.dao.DrugMapper;
 import com.example.model.Page;
+import com.example.pojo.adminInfo.AdminInfoBean;
 import com.example.pojo.drugInfo.DrugInfoBean;
 import com.example.service.iface.IDrugService;
 @Service

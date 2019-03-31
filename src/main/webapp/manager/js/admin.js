@@ -124,7 +124,6 @@ function operateAdmin(value, row, index)
 //删除
 function delAdmin(fAdminId,fAdminRole)
 {
-	alert(fAdminId)
 	if(fAdminRole=="1")
 	{
 		alert("您不能删除超级管理员!");

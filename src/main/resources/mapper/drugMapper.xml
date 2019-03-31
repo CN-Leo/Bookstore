@@ -7,11 +7,14 @@
 		<result column="F_DRUG_CODE" property="fDrugCode" />
 		<result column="F_DRUG_NAME" property="fDrugName" />
 		<result column="F_DRUG_TYPE" property="fDrugType" />
+		<result column="F_DRUG_MODEL" property="fDrugModel" />
 		<result column="F_DRUG_PRICE" property="fDrugPrice" />
 		<result column="F_IS_PRESCRIPTION" property="fIsPrescription" />
 		<result column="F_OPER_TIME" property="fOperTime" />
 		<result column="F_DRUG_IMG" property="fDrugImg" />
 		<result column="F_CONTENT" property="fContent" />
+		<result column="F_STOCK" property="fStock" />
+		<result column="F_STATE" property="fState" />
 	</resultMap>
 	
 	<insert id="addDrug" parameterType="map">
@@ -19,8 +22,8 @@
 		value (#{fId},#{fDrugCode},#{fDruName},#{fDrugType},#{fDrugPrice},#{fIsPrescription},#{fOperTime},#{fDrugImg},#{fContent})
 	</insert>
 	
-	<select id="queryDrugCount" parameterType="map">
-		select count(1) from t_drug_info where 1 =1
+	<select id="queryDrugCount" parameterType="map" resultType="int">
+		select count(1) from t_drug_info where F_STATE = '1'
 		<if test="null != searchLike">
 			and (F_DRUG_CODE like '%${searchLike}%' or 
 				F_DRUG_NAME like '%${searchLike}%'
@@ -28,8 +31,8 @@
 		</if>
 	</select>
 	
-	<select id="queryDrugInfoPage" parameterType="map">
-		select * from t_drug_info where 1 =1
+	<select id="queryDrugInfoPage" parameterType="map" resultMap="BaseResultMap">
+		select * from t_drug_info where F_STATE = '1'
 		<if test="null != searchLike">
 			and (F_DRUG_CODE like '%${searchLike}%' or 
 				F_DRUG_NAME like '%${searchLike}%'
@@ -55,7 +58,7 @@
 	where f_id=#{fId}
 	</update>
 	
-	<delete id="delDrug">
-		delete from t_drug_info where f_id=#{fId}
-	</delete>
+	<update id="delDrug">
+		update t_drug_info set F_STATE = '0' where f_id=#{fId}
+	</update>
 </mapper>

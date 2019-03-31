@@ -194,3 +194,14 @@ function updatePwd(adminId,index){
 		}
 	});
 }
+function changeMoney(num) {
+	var regexp = /(?:\.0*|(\.\d+?)0+)$/
+	num = (num / 100).toFixed(2)
+	num = num.replace(regexp, '$1')
+	return num
+}
+function getQueryString(id) { 
+	   var reg = new RegExp("(^|&)" + id + "=([^&]*)(&|$)","i"); 
+	   var r = window.location.search.substr(1).match(reg); 
+	   if (r!=null) return (r[2]); return null; 
+} 

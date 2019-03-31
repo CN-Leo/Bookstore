@@ -1,27 +1,32 @@
 package com.example.controller;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.io.FileUtils;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.alibaba.fastjson.JSONObject;
 import com.example.common.BaseResultInfo;
 import com.example.model.Page;
 import com.example.pojo.drugInfo.DrugInfoBean;
-import com.example.service.iface.IAdminService;
 import com.example.service.iface.IDrugService;
 import com.example.util.DateTimeUtil;
 import com.example.util.MoneyFormatUtil;
@@ -98,7 +103,6 @@ public class DrugCtrl {
 	
 	@RequestMapping(method=RequestMethod.GET,value ="/drug/del",produces = { "application/xml", "application/json" })
 	public @ResponseBody String delAdmin(HttpServletRequest request,HttpServletResponse response) {
-		Map<String,Object> param = new HashMap<String,Object>();
 		String fId = String.valueOf(request.getParameter("fId")).trim();
 		BaseResultInfo baseResultInfo = new BaseResultInfo();
 		try {
@@ -135,5 +139,33 @@ public class DrugCtrl {
 		Page<DrugInfoBean> page = this.iDrugService.queryDrugInfoPage(pageNumber,pageSize,paraMap);
 		return new ResponseEntity<Page<DrugInfoBean>>(page,HttpStatus.OK);
 	}
+	
+	@RequestMapping(value = "/upload/uploadDrugImg", method = RequestMethod.POST)
+    public ResponseEntity<String> upload(HttpServletRequest req, @RequestParam("file") MultipartFile file) {//1. 接受上传的文件  @RequestParam("file") MultipartFile file
+        try {
+            //2.根据时间戳创建新的文件名，这样即便是第二次上传相同名称的文件，也不会把第一次的文件覆盖了
+            String fileName = System.currentTimeMillis() + file.getOriginalFilename();
+            //3.通过req.getServletContext().getRealPath("") 获取当前项目的真实路径，然后拼接前面的文件名
+            String destFileName = req.getServletContext().getRealPath("") + "manager"+File.separator+"upload" + File.separator + fileName;
+            System.out.println(destFileName);
+            //4.第一次运行的时候，这个文件所在的目录往往是不存在的，这里需要创建一下目录（创建到了webapp下uploaded文件夹下）
+            File destFile = new File(destFileName);
+            destFile.getParentFile().mkdirs();
+            //5.把浏览器上传的文件复制到希望的位置
+            file.transferTo(destFile);
+            //6.把文件名放在model里，以便后续显示用
+            //byte[]b = FileUtils.readFileToByteArray(destFile);
+            Map<String,Object> map = new HashMap<String,Object>();
+            map.put("name", destFileName);
+            map.put("src", "/upload/"+fileName);
+            return new ResponseEntity<String>("/manager/upload/"+fileName,HttpStatus.OK);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            return new ResponseEntity<String>(HttpStatus.OK);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return new ResponseEntity<String>(HttpStatus.OK);
+        }
+    }
 	
 }
