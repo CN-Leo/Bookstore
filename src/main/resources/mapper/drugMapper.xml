@@ -18,10 +18,13 @@
 	</resultMap>
 	
 	<insert id="addDrug" parameterType="map">
-		insert into t_drug_info (F_ID,F_DRUG_CODE,F_DRUG_NAME,F_DRUG_TYPE,F_DRUG_PRICE,F_IS_PRESCRIPTION,F_OPER_TIME,F_DRUG_IMG,F_CONTENT)
-		value (#{fId},#{fDrugCode},#{fDruName},#{fDrugType},#{fDrugPrice},#{fIsPrescription},#{fOperTime},#{fDrugImg},#{fContent})
+		insert into t_drug_info (F_ID,F_DRUG_CODE,F_DRUG_NAME,F_DRUG_TYPE,F_DRUG_PRICE,F_DRUG_MODEL,F_IS_PRESCRIPTION,F_OPER_TIME,F_DRUG_IMG,F_CONTENT,F_STOCK)
+		value (#{fId},#{fDrugCode},#{fDrugName},#{fDrugType},#{fDrugPrice},#{fDrugModel},#{fIsPrescription},#{fOperTime},#{fDrugImg},#{fContent},#{fStock})
 	</insert>
 	
+	<select id="selectDrugById" resultMap="BaseResultMap">
+		select * from t_drug_info where f_id=#{fId}
+	</select>
 	<select id="queryDrugCount" parameterType="map" resultType="int">
 		select count(1) from t_drug_info where F_STATE = '1'
 		<if test="null != searchLike">
@@ -47,14 +50,15 @@
 	</select>
 	
 	<update id="updateDrug" parameterType="map">
-	update t_drug_info set f_drug_code = #{fDrugCode},
+	update t_drug_info set 
 	f_drug_name = #{fDrugName},
 	f_drug_type = #{fDrugType},
 	f_drug_price = #{fDrugPrice},
+	F_DRUG_MODEL = #{fDrugModel},
 	f_is_prescription = #{fIfPrescription},
-	f_oper_time = #{fOperTime},
 	f_drug_img = #{fDrugImg},
-	f_content = #{fContent}
+	f_content = #{fContent},
+	F_STOCK = #{fStock}
 	where f_id=#{fId}
 	</update>
 	

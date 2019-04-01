@@ -23,5 +23,7 @@ public interface IDrugService {
 
 	Page<DrugInfoBean> queryDrugInfoPage(Integer pageNumber, Integer pageSize, Map<String, Object> paraMap);
 
+	BaseResultInfo selectDrugById(String fId);
+
 	
 }

@@ -48,18 +48,22 @@ public class DrugCtrl {
 		Map<String,Object> param = new HashMap<String,Object>();
 		String fDrugName = String.valueOf(request.getParameter("fDrugName")).trim();
 		String fDrugType = String.valueOf(request.getParameter("fDrugType")).trim();
-		String fDrugPrice = String.valueOf(request.getParameter("fDrugPrice")).trim();
+		String fDrugModel = String.valueOf(request.getParameter("fDrugModel")).trim();
 		String fIsPrescription = String.valueOf(request.getParameter("fIsPrescription")).trim();
+		String fDrugPrice = String.valueOf(request.getParameter("fDrugPrice")).trim();
+		String fStock = String.valueOf(request.getParameter("fStock")).trim();
 		String fDrugImg = String.valueOf(request.getParameter("fDrugImg")).trim();
 		String fContent = String.valueOf(request.getParameter("fContent")).trim();
 		param.put("fId", logIdSeqGen.next());
 		param.put("fDrugCode","D"+System.currentTimeMillis());
 		param.put("fDrugName", fDrugName);
+		param.put("fDrugModel", fDrugModel);
 		param.put("fDrugType", fDrugType);
-		param.put("fDrugPrivce",MoneyFormatUtil.fromYuanToFen(fDrugPrice));
+		param.put("fDrugPrice",MoneyFormatUtil.fromYuanToFen(fDrugPrice));
 		param.put("fIsPrescription", fIsPrescription);
 		param.put("fDrugImg", fDrugImg);
-		param.put("fCreateTime", DateTimeUtil.getTodayChar14());
+		param.put("fStock", fStock);
+		param.put("fOperTime", DateTimeUtil.getTodayChar14());
 		param.put("fContent", fContent);
 		BaseResultInfo baseResultInfo = new BaseResultInfo();
 		try {
@@ -78,18 +82,21 @@ public class DrugCtrl {
 		String fId = String.valueOf(request.getParameter("fId")).trim();
 		String fDrugName = String.valueOf(request.getParameter("fDrugName")).trim();
 		String fDrugType = String.valueOf(request.getParameter("fDrugType")).trim();
-		String fDrugPrivce = String.valueOf(request.getParameter("fDrugPrivce")).trim();
+		String fDrugModel = String.valueOf(request.getParameter("fDrugModel")).trim();
 		String fIsPrescription = String.valueOf(request.getParameter("fIsPrescription")).trim();
+		String fDrugPrice = String.valueOf(request.getParameter("fDrugPrice")).trim();
+		String fStock = String.valueOf(request.getParameter("fStock")).trim();
 		String fDrugImg = String.valueOf(request.getParameter("fDrugImg")).trim();
 		String fContent = String.valueOf(request.getParameter("fContent")).trim();
 		param.put("fId", fId);
 		param.put("fDrugName", fDrugName);
 		param.put("fDrugType", fDrugType);
-		param.put("fDrugPrivce",MoneyFormatUtil.fromYuanToFen(fDrugPrivce));
+		param.put("fDrugModel", fDrugModel);
+		param.put("fStock", fStock);
+		param.put("fDrugPrice",MoneyFormatUtil.fromYuanToFen(fDrugPrice));
 		param.put("fIsPrescription", fIsPrescription);
 		param.put("fDrugImg", fDrugImg);
 		param.put("fContent", fContent);
-		
 		BaseResultInfo baseResultInfo = new BaseResultInfo();
 		try {
 			baseResultInfo = iDrugService.updateDrug(param);
@@ -102,7 +109,7 @@ public class DrugCtrl {
 	}
 	
 	@RequestMapping(method=RequestMethod.GET,value ="/drug/del",produces = { "application/xml", "application/json" })
-	public @ResponseBody String delAdmin(HttpServletRequest request,HttpServletResponse response) {
+	public @ResponseBody String delDrug(HttpServletRequest request,HttpServletResponse response) {
 		String fId = String.valueOf(request.getParameter("fId")).trim();
 		BaseResultInfo baseResultInfo = new BaseResultInfo();
 		try {
@@ -111,6 +118,19 @@ public class DrugCtrl {
 		{
 			baseResultInfo.setResultCode("0");
 			baseResultInfo.setResultMsg("删除失败！");
+		}
+		return JSONObject.toJSONString(baseResultInfo);
+	}
+	@RequestMapping(method=RequestMethod.GET,value ="/drug/select",produces = { "application/xml", "application/json" })
+	public @ResponseBody String selectDrug(HttpServletRequest request,HttpServletResponse response) {
+		String fId = String.valueOf(request.getParameter("fId")).trim();
+		BaseResultInfo baseResultInfo = new BaseResultInfo();
+		try {
+			baseResultInfo = iDrugService.selectDrugById(fId);
+		} catch(Exception e) 
+		{
+			baseResultInfo.setResultCode("0");
+			baseResultInfo.setResultMsg("查询失败！");
 		}
 		return JSONObject.toJSONString(baseResultInfo);
 	}
@@ -147,7 +167,6 @@ public class DrugCtrl {
             String fileName = System.currentTimeMillis() + file.getOriginalFilename();
             //3.通过req.getServletContext().getRealPath("") 获取当前项目的真实路径，然后拼接前面的文件名
             String destFileName = req.getServletContext().getRealPath("") + "manager"+File.separator+"upload" + File.separator + fileName;
-            System.out.println(destFileName);
             //4.第一次运行的时候，这个文件所在的目录往往是不存在的，这里需要创建一下目录（创建到了webapp下uploaded文件夹下）
             File destFile = new File(destFileName);
             destFile.getParentFile().mkdirs();

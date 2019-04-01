@@ -1,5 +1,6 @@
 package com.example.service.impl;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -9,7 +10,6 @@ import org.springframework.stereotype.Service;
 import com.example.common.BaseResultInfo;
 import com.example.dao.DrugMapper;
 import com.example.model.Page;
-import com.example.pojo.adminInfo.AdminInfoBean;
 import com.example.pojo.drugInfo.DrugInfoBean;
 import com.example.service.iface.IDrugService;
 @Service
@@ -56,6 +56,19 @@ public class DrugServiceImpl implements IDrugService{
 			page.setRows(drugList);
 		}
 		return page;
+	}
+
+	@Override
+	public BaseResultInfo selectDrugById(String fId) {
+		BaseResultInfo baseResultInfo = new BaseResultInfo();
+		DrugInfoBean bean = this.drugMapper.selectDrugById(fId);
+		if(bean!=null)
+		{
+			Map<String,Object> map = new HashMap<String,Object>();
+			map.put("drugInfo", bean);
+			baseResultInfo.setRetMap(map);
+		}
+		return baseResultInfo;
 	}
 
 	

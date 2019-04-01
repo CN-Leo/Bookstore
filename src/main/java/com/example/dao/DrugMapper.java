@@ -19,4 +19,6 @@ public interface DrugMapper {
 
 	List<DrugInfoBean> queryDrugInfoPage(Map<String, Object> paraMap);
 
+	DrugInfoBean selectDrugById(@Param(value="fId")String fId);
+
 }

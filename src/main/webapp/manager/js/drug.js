@@ -1,3 +1,4 @@
+var drug_img;
 function queryDrugPage() {
 	$('#drugPage').bootstrapTable({
 		method: 'get',
@@ -191,104 +192,166 @@ function refreshDrugTable()
 	$("#drugPage").bootstrapTable('refresh');
 }
 
-
-
-
-function updateUser(fAdminId,fAdminCode){
-	$("#updateCode").val(fAdminCode);
-	$('#updateAdminModal').modal('show');
-	$('#updateAdmin').unbind('click');
-	$("#updateAdmin").click(function(){
-		updateAdminSub(fAdminId);
-	})
-	
-}
-function updateAdminSub(fAdminId)
-{
-	var fAdminCode = $("#updateCode").val();
-	if(fAdminCode==""||fAdminCode==null)
+//新增
+function addDrug(){
+	var fDrugName = $("#fDrugName").val();
+	var fDrugType = $("#fDrugType").val();
+	var fDrugModel = $("#fDrugModel").val();
+	var fIsPrescription = $("#fIsPrescription").val();
+	var fDrugPrice = $("#fDrugPrice").val();
+	var fStock = $("#fStock").val();
+	var fContent = $("#fContent").val();
+	if(fDrugName==""||fDrugName==null)
 	{
-		layer.tips('请填写用户名！', '#updateCode',{tips: [2, '#ff0000']});
-		$("#updateCode").focus();
-		return;
+		layer.tips('不为空！', '#fDrugName',{tips: [2, '#ff0000']});
+		$("#fDrugName").focus();return;
 	}
+	if(fDrugPrice==""||fDrugPrice==null)
+	{
+		layer.tips('不为空！', '#fDrugPrice',{tips: [2, '#ff0000']});
+		$("#fDrugPrice").focus();return;
+	}else{
+		var reg =/^(0|[1-9]\d*)(\s|$|\.\d{1,2}\b)/ ;
+		if(!reg.test(fDrugPrice)||fDrugPrice==0){
+			layer.tips('价格必须大于0并且小数最多2位！', '#fDrugPrice',{tips: [2, '#ff0000']});
+			$("#fDrugPrice").focus();return;
+		}
+	}
+	if(fStock==""||fStock==null)
+	{
+		layer.tips('不为空！', '#fStock',{tips: [2, '#ff0000']});
+		$("#fStock").focus();return;
+	}else{
+		if(!reg.test(fStock)){
+			layer.tips('库存必须大于0！', '#fStock',{tips: [2, '#ff0000']});
+			$("#fStock").focus();return;
+		}
+	}
+	if(drug_img==""||drug_img==null)
+	{
+		layer.tips('请上传图片！', '#upload-file',{tips: [2, '#ff0000']});
+		$("#upload-file").focus();return;
+	}
+	if(fContent==""||fContent==null)
+	{
+		layer.tips('不为空！', '#fContent',{tips: [2, '#ff0000']});
+		$("#fContent").focus();return;
+	}
+	var str = {"fDrugName":fDrugName,"fDrugType":fDrugType,
+			"fDrugModel":fDrugModel,"fIsPrescription":fIsPrescription,
+			"fDrugPrice":fDrugPrice,"fStock":fStock,"fContent":fContent,
+			"fDrugImg":drug_img}
 	$.ajax({
-		url:"/manager/admin/updateAdmin",
+		url:"/manager/drug/add",
 		async:false,
-		data:{"fAdminId":fAdminId,"fAdminCode":fAdminCode},
+		data:str,
 		type:"POST",
-		dataType:"text",
+		dataType :"text",
 		success:function(result)
 		{
-			$('#updateAdminModal').modal('hide');
 			var obj = JSON.parse(result); 
 			if(obj.resultCode=="200")
 			{
-				alert("操作成功！");
-				refreshAdminTable();
+				alert("新增药品成功！");
+				window.location.href="/manager/drug.html";
 			}else{
 				alert(obj.resultMsg);
 			}
 		},
-		error:function(XMLHttpRequest, textStatus, errorThrown){
-		}
 	});
 }
-function addAdmin()
-{
-	if(getCookie("adminRole")==null)
+function updateDrug(fId){
+	var fDrugName = $("#fDrugName").val();
+	var fDrugType = $("#fDrugType").val();
+	var fDrugModel = $("#fDrugModel").val();
+	var fIsPrescription = $("#fIsPrescription").val();
+	var fDrugPrice = $("#fDrugPrice").val();
+	var fStock = $("#fStock").val();
+	var fContent = $("#fContent").val();
+	if(fDrugName==""||fDrugName==null)
 	{
-		window.location.replace("login.html");
+		layer.tips('不为空！', '#fDrugName',{tips: [2, '#ff0000']});
+		$("#fDrugName").focus();return;
 	}
-	if(getCookie("adminRole")=="0")
+	if(fDrugPrice==""||fDrugPrice==null)
 	{
-		alert("您不是超级管理员,不能新增管理员!");
-		return;
+		layer.tips('不为空！', '#fDrugPrice',{tips: [2, '#ff0000']});
+		$("#fDrugPrice").focus();return;
+	}else{
+		var reg =/^(0|[1-9]\d*)(\s|$|\.\d{1,2}\b)/ ;
+		if(!reg.test(fDrugPrice)||fDrugPrice==0){
+			layer.tips('价格必须大于0并且小数最多2位！', '#fDrugPrice',{tips: [2, '#ff0000']});
+			$("#fDrugPrice").focus();return;
+		}
 	}
-	$("#addcode").val("");
-	$('#addAdminModal').modal('show');
-	$('#addAdmin').unbind('click');
-	$("#addAdmin").click(function(){
-		addAdminSub();
-	})
-}
-
-function addAdminSub(){
-	var fAdminCode =$("#addcode").val();
-	var fAdminRole =$("#addrole").val();
-	if(fAdminCode==""||fAdminCode==null)
+	if(fStock==""||fStock==null)
 	{
-		layer.tips('请填写账号！', '#addcode',{tips: [2, '#ff0000']});
-		$("#addcode").focus();
-		return;
+		layer.tips('不为空！', '#fStock',{tips: [2, '#ff0000']});
+		$("#fStock").focus();return;
+	}else{
+		if(!reg.test(fStock)){
+			layer.tips('库存必须大于0！', '#fStock',{tips: [2, '#ff0000']});
+			$("#fStock").focus();return;
+		}
 	}
-	if(fAdminRole==""||fAdminRole==null)
+	if(drug_img==""||drug_img==null)
 	{
-		layer.tips('请填写角色！', '#addrole',{
-			  tips: [2, '#ff0000']});
-		$("#addrole").focus();
-		return;
+		layer.tips('请上传图片！', '#upload-file',{tips: [2, '#ff0000']});
+		$("#upload-file").focus();return;
 	}
+	if(fContent==""||fContent==null)
+	{
+		layer.tips('不为空！', '#fContent',{tips: [2, '#ff0000']});
+		$("#fContent").focus();return;
+	}
+	var str = {"fId":fId,"fDrugName":fDrugName,"fDrugType":fDrugType,
+			"fDrugModel":fDrugModel,"fIsPrescription":fIsPrescription,
+			"fDrugPrice":fDrugPrice,"fStock":fStock,"fContent":fContent,
+			"fDrugImg":drug_img}
 	$.ajax({
-		url:"/manager/admin/register",
+		url:"/manager/drug/updateDrug",
 		async:false,
-		data:{"fAdminCode":fAdminCode,"fAdminRole":fAdminRole},
+		data:str,
 		type:"POST",
-		dataType : "text",
+		dataType :"text",
 		success:function(result)
 		{
-			$('#addAdminModal').modal('hide');
 			var obj = JSON.parse(result); 
 			if(obj.resultCode=="200")
 			{
-				alert("新增管理员成功！");
-				refreshAdminTable();
+				alert("更新药品成功！");
+				window.location.href="/manager/drug.html";
 			}else{
 				alert(obj.resultMsg);
 			}
 		},
-		error:function(XMLHttpRequest, textStatus, errorThrown){
-			
-		}
+	});
+}
+//
+function queryDrugById(fId){
+	$.ajax({
+		url:"/manager/drug/select?fId="+fId,
+		async:false,
+		type:"GET",
+		dataType :"text",
+		success:function(result)
+		{
+			var obj = JSON.parse(result); 
+			if(obj.resultCode=="200")
+			{
+				$("#fDrugName").val(obj.retMap.drugInfo.fDrugName);
+				$("#fDrugCode").val(obj.retMap.drugInfo.fDrugCode);
+				$("#fDrugType").val(obj.retMap.drugInfo.fDrugType);
+				$("#fDrugModel").val(obj.retMap.drugInfo.fDrugModel);
+				$("#fIsPrescription").val(obj.retMap.drugInfo.fIsPrescription);
+				$("#fDrugPrice").val(changeMoney(obj.retMap.drugInfo.fDrugPrice));
+				$("#fStock").val(obj.retMap.drugInfo.fStock);
+				$("#fContent").val(obj.retMap.drugInfo.fContent);
+				$("#fDrugImg").attr("src",obj.retMap.drugInfo.fDrugImg);
+            	drug_img = obj.retMap.drugInfo.fDrugImg;
+			}else{
+				alert(obj.resultMsg);
+			}
+		},
 	});
 }
