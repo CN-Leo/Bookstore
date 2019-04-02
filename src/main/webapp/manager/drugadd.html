@@ -267,6 +267,29 @@ input[type=file] {display:inline;width:80px;height:25px;opacity: 0;margin-top:-3
           return false;
       }
   }
+//图片类型验证
+  function verificationPicFileType(file) {
+      var fileTypes = [".jpg", ".png"];
+      var filePath = file.value;
+      //当括号里面的值为0、空字符、false 、null 、undefined的时候就相当于false
+      if(filePath){
+          var isNext = false;
+          var fileEnd = filePath.substring(filePath.indexOf("."));
+          for (var i = 0; i < fileTypes.length; i++) {
+              if (fileTypes[i] == fileEnd) {
+                  isNext = true;
+                  break;
+              }
+          }
+          if (!isNext){
+              alert('不接受此文件类型');
+              file.value = "";
+              return false;
+          }
+      }else {
+          return false;
+      }
+  }
 
 	</script>
 </body>
