@@ -100,7 +100,7 @@ layui.config({
 });
 var register = function()
 {
-window.location.href = "register.html"   
+window.location.href = "register.jsp"   
 }
 </script>
 </body>

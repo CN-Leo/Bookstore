@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONObject;
@@ -77,10 +78,8 @@ public class UserCtrl {
 		return JSONObject.toJSONString(baseResultInfo);
 	}
 	
-	@RequestMapping(method=RequestMethod.POST,value ="/getIndexInfo",produces = "text/plain")
-	public @ResponseBody String getIndexInfo(HttpServletRequest request,HttpServletResponse response) {
-		BaseResultInfo baseResultInfo = new BaseResultInfo();
-		UserInfoBean user = (UserInfoBean)SessionUtil.getObjectAttribute(request, "user_info");
-		return JSONObject.toJSONString(baseResultInfo);
+	@RequestMapping(method=RequestMethod.GET,value ="/getIndexInfo",produces = "text/plain")
+	public @ResponseBody String getIndexInfo(@RequestParam("param") String param) {
+		return param;
 	}
 }

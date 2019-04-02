@@ -7,7 +7,7 @@ import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
 //重点
-@ServletComponentScan
+//@ServletComponentScan
 @ComponentScan(basePackages = { "com.example" })
 public class BookstoreApplication {
 	public static void main(String[] args) {

@@ -1,4 +1,5 @@
-<!DOCTYPE html>
+<%@ page contentType="text/html; charset=UTF-8" isELIgnored="false"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -142,8 +143,8 @@ layui.config({
 	  $.post("/register",data.field,function(res){
 			if(res.resultCode==GLOBAL_SUCCESS_CODE)
 			{
-				var obj = res.retMap;
-				window.location.href="index.html?fUserCode="+obj.fUserCode+"&fUserName="+obj.fUserName
+				var fUserCode = $("#fUserCode").val();
+				window.location.href="login.jsp?fUserCode="+fUserCode;
 			}else{
 				delError(res);
 				return false

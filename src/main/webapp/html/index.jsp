@@ -109,70 +109,11 @@
             <div class="layui-carousel" id="test1">
               <div carousel-item>
                 <div class="item-box">
-                  <div class="item">
-                    <a href="javascript:;"><img src="../res/static/img/s_img2.jpg"></a>
-                    <div class="title">宝宝五彩袜棉质舒服</div>
+                  <div class="item" ng-repeat="x in drugList">
+                    <a href="javascript:;"><img src="../res/static/img/yp1.jpg"></a>
+                    <div class="title">{{x.fDrugName}}</div>
                     <div class="price">
                       <span>￥49.00</span>
-                      <del>￥99.00</del>
-                    </div>
-                  </div>
-                  <div class="item">
-                    <a href="javascript:;"><img src="../res/static/img/s_img3.jpg"></a>
-                    <div class="title">宝宝五彩袜棉质舒服</div>
-                    <div class="price">
-                      <span>￥49.00</span>
-                      <del>￥99.00</del>
-                    </div>
-                  </div>
-                  <div class="item">
-                    <a href="javascript:;"><img src="../res/static/img/s_img4.jpg"></a>
-                    <div class="title">宝宝五彩袜棉质舒服</div>
-                    <div class="price">
-                      <span>￥49.00</span>
-                      <del>￥99.00</del>
-                    </div>
-                  </div>
-                  <div class="item">
-                    <a href="javascript:;"><img src="../res/static/img/s_img5.jpg"></a>
-                    <div class="title">宝宝五彩袜棉质舒服</div>
-                    <div class="price">
-                      <span>￥49.00</span>
-                      <del>￥99.00</del>
-                    </div>
-                  </div>
-                </div>
-                <div class="item-box">
-                  <div class="item">
-                    <a href="javascript:;"><img src="../res/static/img/s_img2.jpg"></a>
-                    <div class="title">宝宝五彩袜棉质舒服</div>
-                    <div class="price">
-                      <span>￥49.00</span>
-                      <del>￥99.00</del>
-                    </div>
-                  </div>
-                  <div class="item">
-                    <a href="javascript:;"><img src="../res/static/img/s_img3.jpg"></a>
-                    <div class="title">宝宝五彩袜棉质舒服</div>
-                    <div class="price">
-                      <span>￥49.00</span>
-                      <del>￥99.00</del>
-                    </div>
-                  </div>
-                  <div class="item">
-                    <a href="javascript:;"><img src="../res/static/img/s_img4.jpg"></a>
-                    <div class="title">宝宝五彩袜棉质舒服</div>
-                    <div class="price">
-                      <span>￥49.00</span>
-                      <del>￥99.00</del>
-                    </div>
-                  </div>
-                  <div class="item">
-                    <a href="javascript:;"><img src="../res/static/img/s_img5.jpg"></a>
-                    <div class="title">宝宝五彩袜棉质舒服</div>
-                    <div class="price">
-                      <span>￥49.00</span>
-                      <del>￥99.00</del>
                     </div>
                   </div>
                 </div>
@@ -188,7 +129,7 @@
         <div class="left-title">
           <h4><i>1F</i></h4>
           <img src="../res/static/img/icon_gou.png">
-          <h5>宝宝服饰</h5>
+          <h5>中药</h5>
         </div>
         <div class="right-cont">
           <a href="javascript:;" class="top-img"><img src="../res/static/img/img12.jpg" alt=""></a>
@@ -205,7 +146,7 @@
         <div class="left-title">
           <h4><i>2F</i></h4>
           <img src="../res/static/img/icon_gou.png">
-          <h5>奶粉辅食</h5>
+          <h5>西药</h5>
         </div>
         <div class="right-cont">
           <a href="javascript:;" class="top-img"><img src="../res/static/img/img12.jpg" alt=""></a>
@@ -222,7 +163,7 @@
         <div class="left-title">
           <h4><i>3F</i></h4>
           <img src="../res/static/img/icon_gou.png">
-          <h5>宝宝用品</h5>
+          <h5>复方药</h5>
         </div>
         <div class="right-cont">
           <a href="javascript:;" class="top-img"><img src="../res/static/img/img12.jpg" alt=""></a>
@@ -412,7 +353,14 @@
   mainApp.controller("mainController", function($scope,$http,$filter) {
      $scope.fUserName = "${sessionScope.user_info.fUserName}";
      $scope.fUserCode = "${sessionScope.user_info.fUserCode}";
-
+     $http({
+    	    method: 'GET',
+    	    url: '/manager/drug/page?pageSize=5&pageNumber=1'
+    	}).then(function successCallback(response) {
+    		$scope.drugList= response.data.rows;
+    	    }, function errorCallback(response) {
+    	    	 alert(response);
+    	});
   });
 
 
